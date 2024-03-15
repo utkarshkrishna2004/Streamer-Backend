@@ -15,10 +15,20 @@ dotenv.config({
     path: "./env",
 }); // Part II
 
-connectDB();
+connectDB()
+    .then(() => {
+        app.on("error", (error) => {
+            console.log("ERROR: ", error);
+            throw error;
+        });
 
-
-
+        app.listen(process.env.PORT || 8000, () => {
+            console.log(`Server is running at PORT: ${process.env.PORT}`);
+        });
+    })
+    .catch((error) => {
+        console.log("MongoDB connection failed...❌ ", error);
+    });
 
 /*
 -> The code piece below can be used when you want put the whole database connection code in the " index.js " file only!
@@ -27,7 +37,6 @@ connectDB();
 
 -> That's why we write the database connection code in a separate file, say " db/index.js " and then import that and execute it here ( connectDB() ) in the main " index.js " file.
 */
-
 
 /* 
 import express from "express";
