@@ -27,4 +27,16 @@ app.use(cookieParser());
 // at times, we want to access the cookies of our user's browser from our servers and also set it...
 // basically, it allows us to perform CRUD operations on user's cookies
 
+
+
+// routes import (not doing on the top, it's done like this usually)
+import userRouter from "./routes/user.routes.js"; 
+//--> we've ourselves named it "userRouter"
+
+// routes declaration
+app.use("/api/v1/users", userRouter);
+//--> "/api/v1" is just a std practice that we're following
+//--> this means as soon as we hit "/api/v1/users", then the control gets passed to userRouter(ie, user.routes)... there we may write for "register", "login", ...
+//--> eg, "http://localhost:8000/api/v1/users/register"
+
 export { app };

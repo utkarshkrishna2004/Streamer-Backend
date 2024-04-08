@@ -11,6 +11,8 @@ import dotenv from "dotenv"; // Part I
 
 import connectDB from "./db/index.js";
 
+import { app } from "./app.js";
+
 dotenv.config({
     path: "./env",
 }); // Part II
@@ -23,11 +25,11 @@ connectDB()
         });
 
         app.listen(process.env.PORT || 8000, () => {
-            console.log(`Server is running at PORT: ${process.env.PORT}`);
+            console.log(`⚙️  Server is running at PORT: ${process.env.PORT}`);
         });
     })
     .catch((error) => {
-        console.log("MongoDB connection failed...❌ ", error);
+        console.log("❌  MongoDB connection failed! ", error);
     });
 
 /*
