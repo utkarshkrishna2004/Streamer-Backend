@@ -21,7 +21,6 @@ const generateAccessandRefreshTokens = async (userId) => {
 
         // now, we have the "refresh token", the "access token", and, the refresh token has been saved into the DB too
         return { accessToken, refreshToken };
-        
     } catch (error) {
         throw new ApiError(
             500,
@@ -42,7 +41,6 @@ const registerUser = asyncHandler(async (req, res) => {
     // Step 7: Remove Password & Refresh Token field from response
     // Step 8: Check for user creation
     // Step 9: Return the response
-
 
     // Step 1: Get user details from frontend
     const { fullname, email, username, password } = req.body;
@@ -134,12 +132,11 @@ const loginUser = asyncHandler(async (req, res) => {
     // Step 6: Send the tokens to cookies
     // Step 7: Send a response of successful login
 
-
     // Step 1: Get user details from frontend (req body -> data)
     const { email, username, password } = req.body;
 
     // Step 2: Take username or email for authentication
-    if (!username || !email) {
+    if (!(username || email)) {
         throw new ApiError(400, "username or email is required!");
     }
 
@@ -174,7 +171,7 @@ const loginUser = asyncHandler(async (req, res) => {
     // To ensure that the user object returned to the client contains the updated refreshToken, we make another database query to fetch the updated user object.
     // Additionally, when sending the 'loggedInUser' response to the client, it's essential to prioritize security by excluding sensitive fields like 'password' and 'refreshToken'. This prevents sensitive information from being exposed to the client.
     // The 'select("-password -refreshToken")' syntax in the database query helps in excluding these fields from the response.
-    const loggedInUser = User.findById(user._id).select(
+    const loggedInUser = await User.findById(user._id).select(
         "-password -refreshToken"
     );
 
@@ -197,7 +194,7 @@ const loginUser = asyncHandler(async (req, res) => {
                     accessToken,
                     refreshToken,
                 },
-                "User logged in successfully!"
+                "User logged In Successfully"
             )
         );
 });
